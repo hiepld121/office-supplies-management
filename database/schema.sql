@@ -227,12 +227,43 @@ CREATE TABLE products (
 
 -- id
 -- name
+-- description
 -- discount_percent
 -- start_date
 -- end_date
 -- status
 -- created_at
 -- updated_at
+
+CREATE TABLE promotions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(100) NOT NULL,
+
+    description TEXT,
+
+    discount_percent INT NOT NULL CHECK (discount_percent >= 0 AND discount_percent <= 100),
+
+    start_date DATE NOT NULL,
+
+    end_date DATE NOT NULL,
+
+    CHECK (start_date <= end_date),
+
+    status ENUM('active', 'inactive')
+        DEFAULT 'active',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    deleted_at TIMESTAMP NULL,
+
+    INDEX idx_promotion_status (status),
+    INDEX idx_start_dates (start_date),
+    INDEX idx_end_dates (end_date)
+);
 
 -- ==================================
 -- TABLE: promotion_products
