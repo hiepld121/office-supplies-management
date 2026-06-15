@@ -172,6 +172,56 @@ CREATE TABLE suppliers (
 -- deleted_at
 
 -- ==================================
+-- TABLE: products
+-- ==================================
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    sku VARCHAR(50) NOT NULL UNIQUE,
+
+    category_id INT NOT NULL,
+
+    supplier_id INT NOT NULL,
+
+    name VARCHAR(150) NOT NULL,
+
+    description TEXT,
+
+    price INT NOT NULL,
+
+    stock_quantity INT NOT NULL DEFAULT 0,
+
+    image VARCHAR(255),
+
+    status ENUM('active', 'inactive', 'discontinued')
+        DEFAULT 'active',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    deleted_at TIMESTAMP NULL,
+
+    INDEX idx_product_name (name),
+    INDEX idx_category (category_id),
+    INDEX idx_supplier (supplier_id),
+
+    CONSTRAINT fk_product_category
+        FOREIGN KEY (category_id)
+        REFERENCES categories(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_product_supplier
+        FOREIGN KEY (supplier_id)
+        REFERENCES suppliers(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+
+-- ==================================
 -- TABLE: promotions
 -- ==================================
 
