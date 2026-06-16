@@ -292,6 +292,28 @@ CREATE TABLE promotion_products (
 -- created_at
 -- updated_at
 
+CREATE TABLE cart_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT UNSIGNED NOT NULL DEFAULT 1,
+        CHECK (quantity > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_cart_item (user_id, product_id),
+    CONSTRAINT fk_cart_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_cart_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
 -- ==================================
 -- TABLE: orders
 -- ==================================
