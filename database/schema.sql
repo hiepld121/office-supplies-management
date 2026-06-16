@@ -327,6 +327,24 @@ CREATE TABLE cart_items (
 -- created_at
 -- updated_at
 
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    total_amount INT NOT NULL,
+    shipping_address TEXT NOT NULL,
+    payment_method ENUM('credit_card', 'bank_transfer') NOT NULL,
+    status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled')
+        DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_order_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+
 -- ==================================
 -- TABLE: order_details
 -- ==================================
