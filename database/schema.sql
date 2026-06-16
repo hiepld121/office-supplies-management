@@ -91,10 +91,6 @@ CREATE TABLE users (
 -- updated_at
 -- deleted_at
 
--- ==================================
--- TABLE: categories
--- ==================================
-
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -127,9 +123,6 @@ CREATE TABLE categories (
 -- updated_at
 -- deleted_at
 
--- ==================================
--- TABLE: suppliers
--- ==================================
 
 CREATE TABLE suppliers (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -171,9 +164,6 @@ CREATE TABLE suppliers (
 -- updated_at
 -- deleted_at
 
--- ==================================
--- TABLE: products
--- ==================================
 
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -271,6 +261,25 @@ CREATE TABLE promotions (
 
 -- promotion_id
 -- product_id
+
+CREATE TABLE promotion_products (
+    promotion_id INT NOT NULL,
+    product_id INT NOT NULL,
+
+    PRIMARY KEY (promotion_id, product_id),
+
+    CONSTRAINT fk_promotion_product_promotion
+        FOREIGN KEY (promotion_id)
+        REFERENCES promotions(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_promotion_product_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
 
 -- ==================================
 -- TABLE: cart_items
