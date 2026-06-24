@@ -139,7 +139,7 @@ CREATE TABLE products (
     name VARCHAR(150) NOT NULL,
     description TEXT,
     price INT NOT NULL,
-    stock_quantity INT NOT NULL DEFAULT 0,
+    stock_quantity INT UNSIGNED DEFAULT 0,
     image VARCHAR(255),
     status ENUM('active', 'inactive', 'discontinued') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
