@@ -1,6 +1,6 @@
 const db = require("../config/db");
 
-const getAllProducts = (callback) => {
+const getAllProducts = async () => {
     const sql = `
         SELECT
             p.id,
@@ -15,11 +15,14 @@ const getAllProducts = (callback) => {
             ON p.category_id = c.id
         INNER JOIN suppliers s
             ON p.supplier_id = s.id
+        ORDER BY p.id DESC
     `;
 
-    db.query(sql, callback);
+    const [rows] = await db.query(sql);
+
+    return rows;
 };
 
 module.exports = {
-    getAllProducts
+    getAllProducts,
 };
