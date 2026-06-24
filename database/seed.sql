@@ -71,7 +71,7 @@ VALUES
 
 INSERT INTO orders(user_id, total_amount, shipping_address, payment_method, status)
 VALUES
-(3, , 'diachi3', 'credit_card', 'pending'),
+(3, 20000, 'diachi3', 'credit_card', 'pending'),
 (4, 43000, 'diachi4', 'bank_transfer', 'processing'),
 (2, 42500, 'diachi2', 'credit_card', 'delivered');
 
