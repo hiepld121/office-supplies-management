@@ -46,7 +46,42 @@ const getProductById = async (id) => {
     return rows[0];
 };
 
+const createProduct = async (productData) => {
+    const { name, price, stock_quantity, sku, category_id, supplier_id } = productData;
+
+    const sql = `
+        INSERT INTO products (name, price, stock_quantity, sku, category_id, supplier_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const [result] = await db.query(sql, [name, price, stock_quantity, sku, category_id, supplier_id]);
+
+    return result;
+};
+
+const deleteProduct = async (id) => {
+    const sql = "DELETE FROM products WHERE id = ?";
+    const [result] = await db.query(sql, [id]);
+    return result;
+};
+
+const updateProduct = async (id, productData) => {
+    const { name, price, stock_quantity, sku, category_id, supplier_id } = productData;
+
+    const sql = `
+        UPDATE products
+        SET name = ?, price = ?, stock_quantity = ?, sku = ?, category_id = ?, supplier_id = ?
+        WHERE id = ?
+    `;
+
+    const [result] = await db.query(sql, [name, price, stock_quantity, sku, category_id, supplier_id, id]);
+    return result;
+};
+
 module.exports = {
     getAllProducts,
     getProductById,
+    createProduct,
+    deleteProduct,
+    updateProduct,
 };
