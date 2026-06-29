@@ -18,7 +18,7 @@ const getAllProducts = async () => {
         ORDER BY p.id DESC
     `;
 
-    const [rows] = await db.query(sql);
+    const [rows] = await db.execute(sql);
 
     return rows;
 };
@@ -41,7 +41,7 @@ const getProductById = async (id) => {
         WHERE p.id = ?
     `;
 
-    const [rows] = await db.query(sql, [id]);
+    const [rows] = await db.execute(sql, [id]);
 
     return rows[0];
 };
@@ -54,14 +54,14 @@ const createProduct = async (productData) => {
         VALUES (?, ?, ?, ?, ?, ?)
     `;
 
-    const [result] = await db.query(sql, [name, price, stock_quantity, sku, category_id, supplier_id]);
+    const [result] = await db.execute(sql, [name, price, stock_quantity, sku, category_id, supplier_id]);
 
     return result;
 };
 
 const deleteProduct = async (id) => {
     const sql = "DELETE FROM products WHERE id = ?";
-    const [result] = await db.query(sql, [id]);
+    const [result] = await db.execute(sql, [id]);
     return result;
 };
 
@@ -74,7 +74,7 @@ const updateProduct = async (id, productData) => {
         WHERE id = ?
     `;
 
-    const [result] = await db.query(sql, [name, price, stock_quantity, sku, category_id, supplier_id, id]);
+    const [result] = await db.execute(sql, [name, price, stock_quantity, sku, category_id, supplier_id, id]);
     return result;
 };
 
