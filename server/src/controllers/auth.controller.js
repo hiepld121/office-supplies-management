@@ -25,6 +25,32 @@ const registerUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    try {
+        const userData = req.body;
+
+        const user = await AuthService.loginUser(userData);
+
+        return res.status(200).json({
+            success: true,
+            message: "User logged in successfully",
+            token: user.token,
+            user: {
+                id: user.user.id,
+                email: user.user.email,
+                role_id: user.user.role_id,
+            },
+            
+        });
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
 module.exports = {
     registerUser,
+    loginUser,
 };

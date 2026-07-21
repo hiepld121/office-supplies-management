@@ -48,13 +48,19 @@ const getProductById = async (id) => {
 
 const createProduct = async (productData) => {
     const { name, price, stock_quantity, sku, category_id, supplier_id } = productData;
-
     const sql = `
         INSERT INTO products (name, price, stock_quantity, sku, category_id, supplier_id)
         VALUES (?, ?, ?, ?, ?, ?)
     `;
 
-    const [result] = await db.execute(sql, [name, price, stock_quantity, sku, category_id, supplier_id]);
+    const [result] = await db.execute(sql, [
+        name,
+        price,
+        stock_quantity,
+        sku,
+        category_id,
+        supplier_id,
+    ]);
 
     return result;
 };

@@ -5,10 +5,10 @@ VALUES
 
 INSERT INTO users (full_name, email, password, phone, address, role_id)
 VALUES
-('Admin', 'admin@gmail.com', 'admin123', '010111111111', 'diachi1', 1),
-('Le Dai Hiep', 'hiepld@gmail.com', 'hiepld123', '010122222222', 'diachi2', 1),
-('Nguyen Van A', 'nguyenvana@gmail.com', 'nguyenvana123', '010133333333', 'diachi3', 2),
-('Tran Van B', 'tranvanb@gmail.com', 'tranvanb123', '010144444444', 'diachi4', 2);
+('Admin', 'admin@gmail.com', '$2b$10$tgMc9v6Xw/hZ/hsxI3jEh.dFfl/h2ryPYJ/hlXvk7mwA0oEsHcj42', '010111111111', 'diachi1', 1),
+('Le Dai Hiep', 'hiepld@gmail.com', '$2b$10$tgMc9v6Xw/hZ/hsxI3jEh.dFfl/h2ryPYJ/hlXvk7mwA0oEsHcj42', '010122222222', 'diachi2', 1),
+('Nguyen Van A', 'nguyenvana@gmail.com', '$2b$10$tgMc9v6Xw/hZ/hsxI3jEh.dFfl/h2ryPYJ/hlXvk7mwA0oEsHcj42', '010133333333', 'diachi3', 2),
+('Tran Van B', 'tranvanb@gmail.com', '$2b$10$tgMc9v6Xw/hZ/hsxI3jEh.dFfl/h2ryPYJ/hlXvk7mwA0oEsHcj42', '010144444444', 'diachi4', 2);
 
 INSERT INTO categories (name)
 VALUES

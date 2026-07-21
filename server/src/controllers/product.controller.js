@@ -41,7 +41,7 @@ const getProductById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-    try {
+     try {
         const productData = req.body;
         const result = await ProductService.createProduct(productData);
 
