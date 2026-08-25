@@ -4,6 +4,7 @@ const app = express();
 const productRoutes = require("./routes/product.routes");
 const authRoutes = require("./routes/auth.routes");
 const categoryRoutes = require("./routes/category.routes");
+const supplierRoutes = require("./routes/supplier.routes");
 
 
 
@@ -16,6 +17,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/products", productRoutes);
+
+app.use("/api/suppliers", supplierRoutes);
 
 app.use(express.urlencoded({ extended: true }));
 
