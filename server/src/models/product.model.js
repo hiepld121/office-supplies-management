@@ -8,14 +8,14 @@ const getAllProducts = async () => {
             p.price,
             p.stock_quantity,
             p.sku,
-            c.name AS category_name,
-            s.name AS supplier_name
+            p.category_id,
+            p.supplier_id
         FROM products p
         INNER JOIN categories c
             ON p.category_id = c.id
         INNER JOIN suppliers s
             ON p.supplier_id = s.id
-        ORDER BY p.id DESC
+        WHERE p.deleted_at IS NULL
     `;
 
     const [rows] = await db.execute(sql);
@@ -46,6 +46,19 @@ const getProductById = async (id) => {
     return rows[0];
 };
 
+const getProductBySku = async (sku) => {
+    const sql = `
+        SELECT id, sku
+        FROM products
+        WHERE sku = ?
+        AND deleted_at IS NULL
+    `;
+
+    const [rows] = await db.execute(sql, [sku]);
+
+    return rows[0];
+};
+
 const createProduct = async (productData) => {
     const { name, price, stock_quantity, sku, category_id, supplier_id } = productData;
     const sql = `
@@ -66,8 +79,17 @@ const createProduct = async (productData) => {
 };
 
 const deleteProduct = async (id) => {
-    const sql = "DELETE FROM products WHERE id = ?";
+    const sql = `
+        UPDATE products
+        SET
+            status = 'inactive',
+            deleted_at = CURRENT_TIMESTAMP
+        WHERE id = ?
+          AND deleted_at IS NULL
+    `;
+
     const [result] = await db.execute(sql, [id]);
+
     return result;
 };
 
@@ -90,4 +112,5 @@ module.exports = {
     createProduct,
     deleteProduct,
     updateProduct,
+    getProductBySku,
 };

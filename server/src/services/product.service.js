@@ -12,6 +12,10 @@ const getProductById = async (id) => {
     return product;
 };
 
+const getProductBySku = async (sku) => {
+    return await ProductModel.getProductBySku(sku);
+};
+
 const createProduct = async (productData) => {
     const newProduct = await ProductModel.createProduct(productData);
 
@@ -36,4 +40,5 @@ module.exports = {
     createProduct,
     deleteProduct,
     updateProduct,
+    getProductBySku,
 };
