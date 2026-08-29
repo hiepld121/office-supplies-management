@@ -1,21 +1,29 @@
 const OrderModel = require("../models/order.model");
 
-const OrderService = {
-    getAllOrders: async () => {
-        return await OrderModel.getAllOrders();
-    },
-
-    getOrderById: async (id) => {
-        return await OrderModel.getOrderById(id);
-    },
-
-    getOrdersByUserId: async (userId) => {
-        return await OrderModel.getOrdersByUserId(userId);
-    },
-
-    updateOrderStatus: async (id, status) => {
-        return await OrderModel.updateOrderStatus(id, status);
-    },
+const getAllOrders = async () => {
+    return await OrderModel.getAllOrders();
 };
 
-module.exports = OrderService;
+const getOrderById = async (id) => {
+    return await OrderModel.getOrderById(id);
+};
+
+const createOrder = async (orderData) => {
+    return await OrderModel.createOrder(orderData);
+};
+
+const updateOrderStatus = async (id, status) => {
+    return await OrderModel.updateOrderStatus(id, status);
+};
+
+const deleteOrder = async (id) => {
+    return await OrderModel.deleteOrder(id);
+};
+
+module.exports = {
+    getAllOrders,
+    getOrderById,
+    createOrder,
+    updateOrderStatus,
+    deleteOrder,
+};

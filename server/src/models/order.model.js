@@ -1,72 +1,92 @@
 const db = require("../config/db");
 
-const OrderModel = {
-    getAllOrders: async () => {
-        const [rows] = await db.execute(`
-            SELECT
-                o.id,
-                o.user_id,
-                u.name AS customer_name,
-                o.status,
-                o.created_at,
-                o.updated_at
-            FROM orders o
-            INNER JOIN users u
-                ON o.user_id = u.id
-            WHERE o.deleted_at IS NULL
-            ORDER BY o.created_at DESC
-        `);
+const getAllOrders = async () => {
+    const [rows] = await db.execute(
+        `SELECT 
+            id,
+            user_id,
+            total_amount,
+            shipping_address,
+            payment_method,
+            status,
+            created_at,
+            updated_at
+         FROM orders
+         ORDER BY created_at DESC`
+    );
 
-        return rows;
-    },
-
-    getOrderById: async (id) => {
-        const [rows] = await db.execute(`
-            SELECT
-                o.id,
-                o.user_id,
-                u.name AS customer_name,
-                o.status,
-                o.created_at,
-                o.updated_at
-            FROM orders o
-            INNER JOIN users u
-                ON o.user_id = u.id
-            WHERE o.id = ?
-              AND o.deleted_at IS NULL
-        `, [id]);
-
-        return rows[0];
-    },
-
-    getOrdersByUserId: async (userId) => {
-        const [rows] = await db.execute(`
-            SELECT
-                o.id,
-                o.user_id,
-                o.status,
-                o.created_at,
-                o.updated_at
-            FROM orders o
-            WHERE o.user_id = ?
-              AND o.deleted_at IS NULL
-            ORDER BY o.created_at DESC
-        `, [userId]);
-
-        return rows;
-    },
-
-    updateOrderStatus: async (id, status) => {
-        const [result] = await db.execute(`
-            UPDATE orders
-            SET status = ?,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE id = ?
-              AND deleted_at IS NULL
-        `, [status, id]);
-
-        return result;
-    },
+    return rows;
 };
 
-module.exports = OrderModel;
+const getOrderById = async (id) => {
+    const [rows] = await db.execute(
+        `SELECT 
+            id,
+            user_id,
+            total_amount,
+            shipping_address,
+            payment_method,
+            status,
+            created_at,
+            updated_at
+         FROM orders
+         WHERE id = ?`,
+        [id]
+    );
+
+    return rows[0];
+};
+
+const createOrder = async (orderData) => {
+    const {
+        user_id,
+        total_amount,
+        shipping_address,
+        payment_method,
+        status,
+    } = orderData;
+
+    const [result] = await db.execute(
+        `INSERT INTO orders
+        (user_id, total_amount, shipping_address, payment_method, status)
+        VALUES (?, ?, ?, ?, ?)`,
+        [
+            user_id,
+            total_amount,
+            shipping_address,
+            payment_method,
+            status || "pending",
+        ]
+    );
+
+    return result;
+};
+
+const updateOrderStatus = async (id, status) => {
+    const [result] = await db.execute(
+        `UPDATE orders
+         SET status = ?
+         WHERE id = ?`,
+        [status, id]
+    );
+
+    return result;
+};
+
+const deleteOrder = async (id) => {
+    const [result] = await db.execute(
+        `DELETE FROM orders
+         WHERE id = ?`,
+        [id]
+    );
+
+    return result;
+};
+
+module.exports = {
+    getAllOrders,
+    getOrderById,
+    createOrder,
+    updateOrderStatus,
+    deleteOrder,
+};
