@@ -83,10 +83,75 @@ const deleteOrder = async (id) => {
     return result;
 };
 
+const createOrderWithDetails = async (
+    connection,
+    orderData,
+    cartItems
+) => {
+    const {
+        user_id,
+        total_amount,
+        shipping_address,
+        payment_method,
+    } = orderData;
+
+    // Create order
+    const [orderResult] = await connection.execute(
+        `INSERT INTO orders
+        (user_id, total_amount, shipping_address, payment_method, status)
+        VALUES (?, ?, ?, ?, ?)`,
+        [
+            user_id,
+            total_amount,
+            shipping_address,
+            payment_method,
+            "pending",
+        ]
+    );
+
+    const orderId = orderResult.insertId;
+
+    // Create order details
+    for (const item of cartItems) {
+        await connection.execute(
+            `INSERT INTO order_details
+            (order_id, product_id, quantity, price)
+            VALUES (?, ?, ?, ?)`,
+            [
+                orderId,
+                item.product_id,
+                item.quantity,
+                item.price,
+            ]
+        );
+
+        // Decrease product stock
+        await connection.execute(
+            `UPDATE products
+             SET stock_quantity = stock_quantity - ?
+             WHERE id = ?`,
+            [
+                item.quantity,
+                item.product_id,
+            ]
+        );
+    }
+
+    // Clear cart
+    await connection.execute(
+        `DELETE FROM cart_items
+         WHERE user_id = ?`,
+        [user_id]
+    );
+
+    return orderId;
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
+    createOrderWithDetails,
     updateOrderStatus,
     deleteOrder,
 };

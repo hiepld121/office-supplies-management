@@ -111,10 +111,54 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+const checkout = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const {
+            shipping_address,
+            payment_method,
+        } = req.body;
+
+        if (!shipping_address) {
+            return res.status(400).json({
+                success: false,
+                message: "Shipping address is required",
+            });
+        }
+
+        if (!payment_method) {
+            return res.status(400).json({
+                success: false,
+                message: "Payment method is required",
+            });
+        }
+
+        const result = await OrderService.checkout({
+            user_id: userId,
+            shipping_address,
+            payment_method,
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Order placed successfully",
+            data: result,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
     updateOrderStatus,
     deleteOrder,
+    checkout,
 };
+    

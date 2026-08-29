@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
-const getCartByUserId = async (userId) => {
-    const [rows] = await db.execute(
+const getCartByUserId = async (userId, connection = db) => {
+    const [rows] = await connection.execute(
         `SELECT
             ci.id,
             ci.user_id,
