@@ -8,6 +8,8 @@ const supplierRoutes = require("./routes/supplier.routes");
 const promotionRoutes = require("./routes/promotion.routes");
 const promotionProductRoutes = require("./routes/promotion_product.routes");
 const orderRoutes = require("./routes/order.routes");
+const orderDetailsRoutes = require("./routes/order_details.routes");
+const cartRoutes = require("./routes/cart.routes");
 
 
 
@@ -28,6 +30,10 @@ app.use("/api/promotions", promotionRoutes);
 app.use("/api/promotions", promotionProductRoutes);
 
 app.use("/api/orders", orderRoutes);
+
+app.use("/api/order-details", orderDetailsRoutes);
+
+app.use("/api/cart", cartRoutes);
   
 app.use(express.urlencoded({ extended: true }));
 
