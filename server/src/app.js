@@ -7,6 +7,7 @@ const categoryRoutes = require("./routes/category.routes");
 const supplierRoutes = require("./routes/supplier.routes");
 const promotionRoutes = require("./routes/promotion.routes");
 const promotionProductRoutes = require("./routes/promotion_product.routes");
+const orderRoutes = require("./routes/order.routes");
 
 
 
@@ -25,6 +26,8 @@ app.use("/api/suppliers", supplierRoutes);
 app.use("/api/promotions", promotionRoutes);
 
 app.use("/api/promotions", promotionProductRoutes);
+
+app.use("/api/orders", orderRoutes);
   
 app.use(express.urlencoded({ extended: true }));
 
