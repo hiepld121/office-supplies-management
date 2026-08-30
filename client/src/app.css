@@ -152,3 +152,80 @@ hr {
 .home-card p {
     color: #666;
 }
+
+.product-page {
+    width: 100%;
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.product-header h1 {
+    margin-bottom: 5px;
+}
+
+.product-header p {
+    margin-top: 0;
+    color: #666;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.product-image {
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
+    font-size: 60px;
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-info h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.product-sku {
+    font-size: 13px;
+    color: #777;
+}
+
+.product-price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product-info button {
+    width: calc(100% - 12px);
+}
+
+.product-info button:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.empty-products {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+}
