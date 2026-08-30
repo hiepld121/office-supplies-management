@@ -147,9 +147,32 @@ const createOrderWithDetails = async (
     return orderId;
 };
 
+const getOrdersByUserId = async (userId) => {
+    const [rows] = await db.execute(
+        `SELECT
+            id,
+            user_id,
+            total_amount,
+            shipping_address,
+            payment_method,
+            status,
+            created_at,
+            updated_at
+         FROM orders
+         WHERE user_id = ?
+         ORDER BY created_at DESC`,
+        [userId]
+    );
+
+    return rows;
+};
+
+
+
 module.exports = {
     getAllOrders,
     getOrderById,
+    getOrdersByUserId,   
     createOrder,
     createOrderWithDetails,
     updateOrderStatus,

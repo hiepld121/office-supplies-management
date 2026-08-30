@@ -22,6 +22,13 @@ router.get(
     OrderController.getOrderById
 );
 
+// Get my orders - Customer
+router.get(
+    "/my-orders",
+    authenticateToken,
+    OrderController.getMyOrders
+);
+
 // Checkout - Customer
 router.post(
     "/checkout",

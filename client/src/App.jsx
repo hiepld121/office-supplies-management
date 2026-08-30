@@ -14,6 +14,8 @@ import Cart from "./pages/Cart";
 
 import Checkout from "./pages/Checkout";
 
+import Orders from "./pages/Orders";
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,21 +29,22 @@ function App() {
         <Route path="/products" element={<ProductList />} />
 
         <Route
-    path="/cart"
-    element={
-        <ProtectedRoute>
-            <Cart />
-        </ProtectedRoute>
-    }
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
 
-    <Route
-    path="/checkout"
-    element={
-        <ProtectedRoute>
-            <Checkout />
-        </ProtectedRoute>
-    }
-/>
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/dashboard"
@@ -53,7 +56,14 @@ function App() {
         />
       </Routes>
 
-      
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        }
+      />
     </BrowserRouter>
   );
 }
