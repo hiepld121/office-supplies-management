@@ -26,6 +26,8 @@ import SupplierManagement from "./pages/SupplierManagement";
 
 import PromotionManagement from "./pages/PromotionManagement";
 
+import OrderManagement from "./pages/OrderManagement";
+
 function App() {
   return (
     <BrowserRouter>
@@ -116,6 +118,15 @@ function App() {
         element={
           <ProtectedRoute>
             <PromotionManagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/orders"
+        element={
+          <ProtectedRoute>
+            <OrderManagement />
           </ProtectedRoute>
         }
       />
