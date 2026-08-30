@@ -34,11 +34,16 @@ import Navbar from "./components/Navbar";
 
 import AdminRoute from "./components/AdminRoute";
 
+import Home from "./pages/Home";
+
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      <main>
       <Routes>
+        <Route path="/" element={<Home />} />
+
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
@@ -137,6 +142,7 @@ function App() {
           </AdminRoute>
         }
       />
+      </main>
     </BrowserRouter>
   );
 }

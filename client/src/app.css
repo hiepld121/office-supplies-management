@@ -102,3 +102,53 @@ hr {
     border-top: 1px solid #ddd;
     margin: 25px 0;
 }
+
+.hero {
+    background: white;
+    padding: 60px 40px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.home-section {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.home-section h2 {
+    margin-top: 0;
+}
+
+.home-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.home-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.home-card h3 {
+    margin-top: 0;
+}
+
+.home-card p {
+    color: #666;
+}
