@@ -16,6 +16,8 @@ import Checkout from "./pages/Checkout";
 
 import Orders from "./pages/Orders";
 
+import AdminDashboard from "./pages/AdminDashboard";
+
 function App() {
   return (
     <BrowserRouter>
@@ -61,6 +63,15 @@ function App() {
         element={
           <ProtectedRoute>
             <Orders />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />
