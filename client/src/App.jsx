@@ -8,6 +8,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import ProductList from "./pages/ProductList";
 
+import CategoryList from "./pages/CategoryList";
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +17,8 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
+
+        <Route path="/categories" element={<CategoryList />} />
 
         <Route path="/products" element={<ProductList />} />
 
