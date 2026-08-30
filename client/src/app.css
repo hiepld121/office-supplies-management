@@ -550,3 +550,42 @@ hr {
     border-radius: 10px;
     font-size: 22px;
 }
+
+.admin-dashboard {
+    width: 100%;
+}
+
+.admin-dashboard-header {
+    margin-bottom: 30px;
+}
+
+.admin-dashboard-header h1 {
+    margin-bottom: 5px;
+}
+
+.admin-dashboard-header p {
+    color: #666;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.dashboard-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.dashboard-card strong {
+    font-size: 28px;
+}

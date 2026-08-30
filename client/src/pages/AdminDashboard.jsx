@@ -42,37 +42,50 @@ const AdminDashboard = () => {
     }
 
     return (
-        <div>
-            <h1>Admin Dashboard</h1>
-
+    <div className="admin-dashboard">
+        <div className="admin-dashboard-header">
             <div>
-                <div>
-                    <h3>Total Products</h3>
-                    <p>{stats.total_products}</p>
-                </div>
-
-                <div>
-                    <h3>Total Customers</h3>
-                    <p>{stats.total_customers}</p>
-                </div>
-
-                <div>
-                    <h3>Total Orders</h3>
-                    <p>{stats.total_orders}</p>
-                </div>
-
-                <div>
-                    <h3>Total Revenue</h3>
-                    <p>
-                        {Number(
-                            stats.total_revenue
-                        ).toLocaleString()}{" "}
-                        VND
-                    </p>
-                </div>
+                <h1>Admin Dashboard</h1>
+                <p>
+                    Overview of your office supplies system
+                </p>
             </div>
         </div>
-    );
+
+        <div className="dashboard-grid">
+            <div className="dashboard-card">
+                <h3>Total Products</h3>
+                <strong>
+                    {stats.total_products}
+                </strong>
+            </div>
+
+            <div className="dashboard-card">
+                <h3>Total Customers</h3>
+                <strong>
+                    {stats.total_customers}
+                </strong>
+            </div>
+
+            <div className="dashboard-card">
+                <h3>Total Orders</h3>
+                <strong>
+                    {stats.total_orders}
+                </strong>
+            </div>
+
+            <div className="dashboard-card">
+                <h3>Total Revenue</h3>
+                <strong>
+                    {Number(
+                        stats.total_revenue
+                    ).toLocaleString()}{" "}
+                    VND
+                </strong>
+            </div>
+        </div>
+    </div>
+);
 };
 
 export default AdminDashboard;
