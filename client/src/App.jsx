@@ -24,6 +24,8 @@ import CategoryManagement from "./pages/CategoryManagement";
 
 import SupplierManagement from "./pages/SupplierManagement";
 
+import PromotionManagement from "./pages/PromotionManagement";
+
 function App() {
   return (
     <BrowserRouter>
@@ -105,6 +107,15 @@ function App() {
         element={
           <ProtectedRoute>
             <SupplierManagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/promotions"
+        element={
+          <ProtectedRoute>
+            <PromotionManagement />
           </ProtectedRoute>
         }
       />
