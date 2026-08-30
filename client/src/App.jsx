@@ -18,6 +18,8 @@ import Orders from "./pages/Orders";
 
 import AdminDashboard from "./pages/AdminDashboard";
 
+import ProductManagement from "./pages/ProductManagement";
+
 function App() {
   return (
     <BrowserRouter>
@@ -72,6 +74,15 @@ function App() {
         element={
           <ProtectedRoute>
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/products"
+        element={
+          <ProtectedRoute>
+            <ProductManagement />
           </ProtectedRoute>
         }
       />
