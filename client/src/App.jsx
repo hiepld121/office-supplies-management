@@ -28,9 +28,12 @@ import PromotionManagement from "./pages/PromotionManagement";
 
 import OrderManagement from "./pages/OrderManagement";
 
+import Navbar from "./components/Navbar";
+
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
 

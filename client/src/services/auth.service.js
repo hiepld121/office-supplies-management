@@ -7,7 +7,17 @@ const login = async (email, password) => {
     });
 
     if (response.data.success && response.data.token) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem(
+            "token",
+            response.data.token
+        );
+
+        if (response.data.user) {
+            localStorage.setItem(
+                "role_id",
+                response.data.user.role_id
+            );
+        }
     }
 
     return response.data;
