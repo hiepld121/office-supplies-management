@@ -340,3 +340,66 @@ hr {
 .cart-summary strong {
     font-size: 24px;
 }
+
+.checkout-page {
+    width: 100%;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.checkout-form,
+.checkout-summary {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-form h2,
+.checkout-summary h2 {
+    margin-top: 0;
+}
+
+.checkout-form label {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea {
+    margin: 8px 0;
+    width: 100%;
+}
+
+.checkout-form button {
+    margin: 20px 0 0;
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-item p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.checkout-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+}
