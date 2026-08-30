@@ -14,84 +14,55 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-            <Link to="/">Home</Link>
+        <nav className="navbar">
+            <Link to="/" className="navbar-brand">
+                Office Supplies
+            </Link>
 
-            {" | "}
+            <div className="navbar-links">
+                <Link to="/">Home</Link>
 
-            <Link to="/products">Products</Link>
+                <Link to="/products">
+                    Products
+                </Link>
 
-            {" | "}
+                {token && (
+                    <>
+                        <Link to="/cart">
+                            Cart
+                        </Link>
 
-            {token && (
-                <>
-                    <Link to="/cart">Cart</Link>
+                        <Link to="/orders">
+                            My Orders
+                        </Link>
+                    </>
+                )}
 
-                    {" | "}
-
-                    <Link to="/orders">My Orders</Link>
-
-                    {" | "}
-                </>
-            )}
-
-            {token && roleId === "1" && (
-                <>
-                    <strong>Admin: </strong>
-
+                {token && roleId === "1" && (
                     <Link to="/admin/dashboard">
-                        Dashboard
+                        Admin
                     </Link>
+                )}
 
-                    {" | "}
+                {token ? (
+                    <button
+                        className="navbar-logout"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+                ) : (
+                    <>
+                        <Link to="/login">
+                            Login
+                        </Link>
 
-                    <Link to="/admin/products">
-                        Products
-                    </Link>
-
-                    {" | "}
-
-                    <Link to="/admin/categories">
-                        Categories
-                    </Link>
-
-                    {" | "}
-
-                    <Link to="/admin/suppliers">
-                        Suppliers
-                    </Link>
-
-                    {" | "}
-
-                    <Link to="/admin/promotions">
-                        Promotions
-                    </Link>
-
-                    {" | "}
-
-                    <Link to="/admin/orders">
-                        Orders
-                    </Link>
-
-                    {" | "}
-                </>
-            )}
-
-            {token ? (
-                <button onClick={handleLogout}>
-                    Logout
-                </button>
-            ) : (
-                <>
-                    <Link to="/login">Login</Link>
-
-                    {" | "}
-
-                    <Link to="/register">
-                        Register
-                    </Link>
-                </>
-            )}
+                        <Link to="/register">
+                            Register
+                        </Link>
+                    </>
+                )}
+            </div>
         </nav>
     );
 };
