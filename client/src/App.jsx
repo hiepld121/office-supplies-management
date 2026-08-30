@@ -20,6 +20,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 import ProductManagement from "./pages/ProductManagement";
 
+import CategoryManagement from "./pages/CategoryManagement";
+
 function App() {
   return (
     <BrowserRouter>
@@ -83,6 +85,15 @@ function App() {
         element={
           <ProtectedRoute>
             <ProductManagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/categories"
+        element={
+          <ProtectedRoute>
+            <CategoryManagement />
           </ProtectedRoute>
         }
       />
