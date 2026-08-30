@@ -10,6 +10,10 @@ import ProductList from "./pages/ProductList";
 
 import CategoryList from "./pages/CategoryList";
 
+import Cart from "./pages/Cart";
+
+import Checkout from "./pages/Checkout";
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +27,23 @@ function App() {
         <Route path="/products" element={<ProductList />} />
 
         <Route
+    path="/cart"
+    element={
+        <ProtectedRoute>
+            <Cart />
+        </ProtectedRoute>
+    }
+
+    <Route
+    path="/checkout"
+    element={
+        <ProtectedRoute>
+            <Checkout />
+        </ProtectedRoute>
+    }
+/>
+
+        <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
@@ -31,6 +52,8 @@ function App() {
           }
         />
       </Routes>
+
+      
     </BrowserRouter>
   );
 }
