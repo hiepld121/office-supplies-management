@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 import ProductList from "./pages/ProductList";
 
@@ -30,6 +30,8 @@ import OrderManagement from "./pages/OrderManagement";
 
 import Navbar from "./components/Navbar";
 
+import AdminRoute from "./components/AdminRoute";
+
 function App() {
   return (
     <BrowserRouter>
@@ -46,27 +48,27 @@ function App() {
         <Route
           path="/cart"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Cart />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
 
         <Route
           path="/checkout"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Checkout />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
 
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Dashboard />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
       </Routes>
@@ -74,63 +76,63 @@ function App() {
       <Route
         path="/orders"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <Orders />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/dashboard"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminDashboard />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/products"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <ProductManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/categories"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <CategoryManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/suppliers"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <SupplierManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/promotions"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <PromotionManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 
       <Route
         path="/admin/orders"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <OrderManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
     </BrowserRouter>
