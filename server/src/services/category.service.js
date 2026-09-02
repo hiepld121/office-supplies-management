@@ -1,34 +1,29 @@
-const CategoryModel = require('../models/category.model');
+const CategoryModel = require("../models/category.model");
 
 const getAllCategories = async () => {
-    const categories = await CategoryModel.getAllCategories();
-    return categories;
+    return await CategoryModel.getAllCategories();
 };
 
 const getCategoryById = async (id) => {
-    const category = await CategoryModel.getCategoryById(id);
-    return category;
-}
+    return await CategoryModel.getCategoryById(id);
+};
 
 const createCategory = async (categoryData) => {
-    const result = await CategoryModel.createCategory(categoryData);
-    return result;
-}
+    return await CategoryModel.createCategory(categoryData);
+};
 
 const updateCategory = async (id, categoryData) => {
-    const result = await CategoryModel.updateCategory(id, categoryData);
-    return result;
-}
+    return await CategoryModel.updateCategory(id, categoryData);
+};
 
 const deleteCategory = async (id) => {
-    const result = await CategoryModel.deleteCategory(id);
-    return result;
-}
+    return await CategoryModel.deleteCategory(id);
+};
 
 module.exports = {
     getAllCategories,
     getCategoryById,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
 };

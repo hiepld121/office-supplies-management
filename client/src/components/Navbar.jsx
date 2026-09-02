@@ -9,58 +9,59 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("role_id");
-
         navigate("/login");
     };
 
+    const isAdmin = roleId === "1";
+
     return (
         <nav className="navbar">
-            <Link to="/" className="navbar-brand">
-                Office Supplies
-            </Link>
+            <Link to="/">Office Supplies</Link>
 
             <div className="navbar-links">
                 <Link to="/">Home</Link>
-
-                <Link to="/products">
-                    Products
-                </Link>
+                <Link to="/products">Products</Link>
+                <Link to="/categories">Categories</Link>
 
                 {token && (
                     <>
-                        <Link to="/cart">
-                            Cart
-                        </Link>
+                        <Link to="/cart">Cart</Link>
+                        <Link to="/orders">Orders</Link>
+                    </>
+                )}
 
-                        <Link to="/orders">
-                            My Orders
+                {isAdmin && (
+                    <>
+                        <Link to="/admin/dashboard">
+                            Dashboard
+                        </Link>
+                        <Link to="/admin/products">
+                            Products
+                        </Link>
+                        <Link to="/admin/categories">
+                            Categories
+                        </Link>
+                        <Link to="/admin/suppliers">
+                            Suppliers
+                        </Link>
+                        <Link to="/admin/promotions">
+                            Promotions
+                        </Link>
+                        <Link to="/admin/orders">
+                            Orders
                         </Link>
                     </>
                 )}
 
-                {token && roleId === "1" && (
-                    <Link to="/admin/dashboard">
-                        Admin
-                    </Link>
-                )}
-
-                {token ? (
-                    <button
-                        className="navbar-logout"
-                        onClick={handleLogout}
-                    >
+                {!token ? (
+                    <>
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                    </>
+                ) : (
+                    <button onClick={handleLogout}>
                         Logout
                     </button>
-                ) : (
-                    <>
-                        <Link to="/login">
-                            Login
-                        </Link>
-
-                        <Link to="/register">
-                            Register
-                        </Link>
-                    </>
                 )}
             </div>
         </nav>

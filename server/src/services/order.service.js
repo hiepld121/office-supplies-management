@@ -10,6 +10,10 @@ const getOrderById = async (id) => {
   return await OrderModel.getOrderById(id);
 };
 
+const getOrdersByUserId = async (userId) => {
+  return await OrderModel.getOrdersByUserId(userId);
+};
+
 const createOrder = async (orderData) => {
   return await OrderModel.createOrder(orderData);
 };
@@ -30,7 +34,7 @@ const checkout = async (orderData) => {
 
     const cartItems = await CartModel.getCartByUserId(
       orderData.user_id,
-      connection,
+      connection
     );
 
     if (cartItems.length === 0) {
@@ -40,14 +44,17 @@ const checkout = async (orderData) => {
     // Check stock
     for (const item of cartItems) {
       if (item.quantity > item.stock_quantity) {
-        throw new Error(`Insufficient stock for product: ${item.product_name}`);
+        throw new Error(
+          `Insufficient stock for product: ${item.product_name}`
+        );
       }
     }
 
     // Calculate total
     const totalAmount = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0,
+      (total, item) =>
+        total + Number(item.price) * Number(item.quantity),
+      0
     );
 
     const orderId = await OrderModel.createOrderWithDetails(
@@ -56,7 +63,7 @@ const checkout = async (orderData) => {
         ...orderData,
         total_amount: totalAmount,
       },
-      cartItems,
+      cartItems
     );
 
     await connection.commit();
@@ -76,6 +83,7 @@ const checkout = async (orderData) => {
 module.exports = {
   getAllOrders,
   getOrderById,
+  getOrdersByUserId,
   createOrder,
   updateOrderStatus,
   deleteOrder,

@@ -1,17 +1,17 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import authService from "../services/auth.service";
 
-const Login = () => {
+const Register = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
+        full_name: "",
         email: "",
         password: "",
     });
 
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -22,53 +22,29 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setError("");
-        setLoading(true);
 
         try {
-            const result = await authService.login(
-                formData.email,
-                formData.password
+            const result = await authService.register(
+                formData
             );
 
             if (result.success) {
-                // Lưu token đăng nhập
-                if (result.token) {
-                    localStorage.setItem(
-                        "token",
-                        result.token
-                    );
-                }
-
-                // Nếu backend trả về user
-                if (result.user) {
-                    localStorage.setItem(
-                        "user",
-                        JSON.stringify(result.user)
-                    );
-                }
-
-                navigate("/");
-            } else {
-                setError(
-                    result.message || "Login failed."
-                );
+                alert("Registration successful. Please login.");
+                navigate("/login");
             }
         } catch (error) {
             setError(
                 error.response?.data?.message ||
-                "Invalid email or password."
+                "Registration failed."
             );
-        } finally {
-            setLoading(false);
         }
     };
 
     return (
         <div className="auth-page">
             <div className="auth-card">
-                <h1>Login</h1>
+                <h1>Register</h1>
 
                 {error && (
                     <p className="error-message">
@@ -78,49 +54,50 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="email">
-                            Email
-                        </label>
+                        <label>Name</label>
 
                         <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={formData.email}
+                            type="text"
+                            name="full_name"
+                            value={formData.full_name}
                             onChange={handleChange}
-                            placeholder="Enter your email"
                             required
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="password">
-                            Password
-                        </label>
+                        <label>Email</label>
 
                         <input
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={formData.password}
+                            type="email"
+                            name="email"
+                            value={formData.email}
                             onChange={handleChange}
-                            placeholder="Enter your password"
                             required
                         />
                     </div>
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                    >
-                        {loading ? "Logging in..." : "Login"}
+                    <div>
+                        <label>Password</label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <button type="submit">
+                        Register
                     </button>
                 </form>
 
                 <p>
-                    Don't have an account?{" "}
-                    <Link to="/register">
-                        Register
+                    Already have an account?{" "}
+                    <Link to="/login">
+                        Login
                     </Link>
                 </p>
             </div>
@@ -128,4 +105,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

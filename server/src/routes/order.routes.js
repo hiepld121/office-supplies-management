@@ -5,21 +5,15 @@ const router = express.Router();
 const OrderController = require("../controllers/order.controller");
 
 const { authenticateToken } = require("../middleware/auth.middleware");
+
 const { authorizeRole } = require("../middleware/role.middleware");
 
-// Get all orders
+// Get all orders - Admin
 router.get(
     "/",
     authenticateToken,
     authorizeRole(1),
     OrderController.getAllOrders
-);
-
-// Get order by ID
-router.get(
-    "/:id",
-    authenticateToken,
-    OrderController.getOrderById
 );
 
 // Get my orders - Customer
@@ -34,6 +28,13 @@ router.post(
     "/checkout",
     authenticateToken,
     OrderController.checkout
+);
+
+// Get order by ID
+router.get(
+    "/:id",
+    authenticateToken,
+    OrderController.getOrderById
 );
 
 // Create order

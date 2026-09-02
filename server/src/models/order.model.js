@@ -19,7 +19,8 @@ const getAllOrders = async () => {
 };
 
 const getOrderById = async (id) => {
-    const [rows] = await db.execute(
+    // Get order
+    const [orderRows] = await db.execute(
         `SELECT 
             id,
             user_id,
@@ -34,7 +35,32 @@ const getOrderById = async (id) => {
         [id]
     );
 
-    return rows[0];
+    if (orderRows.length === 0) {
+        return null;
+    }
+
+    const order = orderRows[0];
+
+    // Get order items
+    const [itemRows] = await db.execute(
+        `SELECT
+            od.id,
+            od.order_id,
+            od.product_id,
+            p.name AS product_name,
+            od.quantity,
+            od.price
+         FROM order_details od
+         INNER JOIN products p
+             ON od.product_id = p.id
+         WHERE od.order_id = ?`,
+        [id]
+    );
+
+    return {
+        ...order,
+        items: itemRows,
+    };
 };
 
 const createOrder = async (orderData) => {

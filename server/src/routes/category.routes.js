@@ -7,12 +7,21 @@ const CategoryController = require("../controllers/category.controller");
 const { authenticateToken } = require("../middleware/auth.middleware");
 const { authorizeRole } = require("../middleware/role.middleware");
 
-// Public Routes
-router.get("/", CategoryController.getAllCategories);
+// Get all categories
+router.get(
+    "/",
+    authenticateToken,
+    CategoryController.getAllCategories
+);
 
-router.get("/:id", CategoryController.getCategoryById);
+// Get category by ID
+router.get(
+    "/:id",
+    authenticateToken,
+    CategoryController.getCategoryById
+);
 
-// Admin Routes
+// Create category - Admin
 router.post(
     "/",
     authenticateToken,
@@ -20,6 +29,7 @@ router.post(
     CategoryController.createCategory
 );
 
+// Update category - Admin
 router.put(
     "/:id",
     authenticateToken,
@@ -27,6 +37,7 @@ router.put(
     CategoryController.updateCategory
 );
 
+// Delete category - Admin
 router.delete(
     "/:id",
     authenticateToken,
