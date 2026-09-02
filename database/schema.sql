@@ -272,7 +272,7 @@ CREATE TABLE orders (
     user_id INT NOT NULL,
     total_amount INT NOT NULL,
     shipping_address TEXT NOT NULL,
-    payment_method ENUM('credit_card', 'bank_transfer') NOT NULL,
+    payment_method ENUM('cod', 'bank_transfer') NOT NULL,
     status ENUM(
         'pending',
         'processing',
