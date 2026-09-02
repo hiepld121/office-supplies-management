@@ -43,9 +43,26 @@ const getSupplierById = async (req, res) => {
 
 const createSupplier = async (req, res) => {
     try {
-        const supplierData = req.body;
+        const {
+            name,
+            phone,
+            email,
+            address,
+        } = req.body;
 
-        const result = await SupplierService.createSupplier(supplierData);
+        if (!name || !name.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Supplier name is required",
+            });
+        }
+
+        const result = await SupplierService.createSupplier({
+            name: name.trim(),
+            phone,
+            email,
+            address,
+        });
 
         return res.status(201).json({
             success: true,
@@ -53,14 +70,6 @@ const createSupplier = async (req, res) => {
             supplierId: result.insertId,
         });
     } catch (error) {
-        // MySQL duplicate entry
-        if (error.code === "ER_DUP_ENTRY") {
-            return res.status(409).json({
-                success: false,
-                message: "Phone or email already exists",
-            });
-        }
-
         return res.status(500).json({
             success: false,
             message: error.message,
@@ -71,11 +80,10 @@ const createSupplier = async (req, res) => {
 const updateSupplier = async (req, res) => {
     try {
         const { id } = req.params;
-        const supplierData = req.body;
 
         const result = await SupplierService.updateSupplier(
             id,
-            supplierData
+            req.body
         );
 
         if (result.affectedRows === 0) {
@@ -127,5 +135,5 @@ module.exports = {
     getSupplierById,
     createSupplier,
     updateSupplier,
-    deleteSupplier
+    deleteSupplier,
 };
