@@ -2,262 +2,226 @@ import { useEffect, useState } from "react";
 import promotionService from "../services/promotion.service";
 
 const PromotionManagement = () => {
-    const [promotions, setPromotions] = useState([]);
+  const [promotions, setPromotions] = useState([]);
 
-    const [form, setForm] = useState({
-        name: "",
-        discount_percent: "",
-        start_date: "",
-        end_date: "",
-        status: "active",
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    discount_percent: "",
+    start_date: "",
+    end_date: "",
+    status: "active",
+  });
+
+  const [editingId, setEditingId] = useState(null);
+
+  const fetchPromotions = async () => {
+    try {
+      const result = await promotionService.getAllPromotions();
+
+      if (result.success) {
+        setPromotions(result.data);
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Cannot load promotions");
+    }
+  };
+
+  useEffect(() => {
+    fetchPromotions();
+  }, []);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const resetForm = () => {
+    setForm({
+      name: "",
+      description: "",
+      discount_percent: "",
+      start_date: "",
+      end_date: "",
+      status: "active",
     });
 
-    const [editingId, setEditingId] = useState(null);
+    setEditingId(null);
+  };
 
-    const fetchPromotions = async () => {
-        try {
-            const result = await promotionService.getAllPromotions();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            if (result.success) {
-                setPromotions(result.data);
-            }
-        } catch (error) {
-            alert(
-                error.response?.data?.message ||
-                "Cannot load promotions"
-            );
-        }
-    };
+    try {
+      const promotionData = {
+        name: form.name,
+        description: form.description,
+        discount_percent: Number(form.discount_percent),
+        start_date: form.start_date,
+        end_date: form.end_date,
+        status: form.status,
+      };
 
-    useEffect(() => {
-        fetchPromotions();
-    }, []);
+      if (editingId) {
+        await promotionService.updatePromotion(editingId, promotionData);
 
-    const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        });
-    };
+        alert("Promotion updated successfully");
+      } else {
+        await promotionService.createPromotion(promotionData);
 
-    const resetForm = () => {
-        setForm({
-            name: "",
-            discount_percent: "",
-            start_date: "",
-            end_date: "",
-            status: "active",
-        });
+        alert("Promotion created successfully");
+      }
 
-        setEditingId(null);
-    };
+      resetForm();
+      fetchPromotions();
+    } catch (error) {
+      alert(error.response?.data?.message || "Operation failed");
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleEdit = (promotion) => {
+    setEditingId(promotion.id);
 
-        try {
-            const promotionData = {
-                name: form.name,
-                discount_percent: Number(form.discount_percent),
-                start_date: form.start_date,
-                end_date: form.end_date,
-                status: form.status,
-            };
+    setForm({
+      name: promotion.name || "",
+      description: promotion.description || "",
+      discount_percent: promotion.discount_percent || "",
+      start_date: promotion.start_date ? promotion.start_date.slice(0, 10) : "",
+      end_date: promotion.end_date ? promotion.end_date.slice(0, 10) : "",
+      status: promotion.status || "active",
+    });
+  };
 
-            if (editingId) {
-                await promotionService.updatePromotion(
-                    editingId,
-                    promotionData
-                );
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this promotion?")) {
+      return;
+    }
 
-                alert("Promotion updated successfully");
-            } else {
-                await promotionService.createPromotion(
-                    promotionData
-                );
+    try {
+      await promotionService.deletePromotion(id);
 
-                alert("Promotion created successfully");
-            }
+      alert("Promotion deleted successfully");
 
-            resetForm();
-            fetchPromotions();
-        } catch (error) {
-            alert(
-                error.response?.data?.message ||
-                "Operation failed"
-            );
-        }
-    };
+      fetchPromotions();
+    } catch (error) {
+      alert(error.response?.data?.message || "Cannot delete promotion");
+    }
+  };
 
-    const handleEdit = (promotion) => {
-        setEditingId(promotion.id);
+  return (
+    <div>
+      <h1>Promotion Management</h1>
 
-        setForm({
-            name: promotion.name || "",
-            discount_percent:
-                promotion.discount_percent || "",
-            start_date:
-                promotion.start_date
-                    ? promotion.start_date.slice(0, 10)
-                    : "",
-            end_date:
-                promotion.end_date
-                    ? promotion.end_date.slice(0, 10)
-                    : "",
-            status: promotion.status || "active",
-        });
-    };
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Promotion name"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Delete this promotion?")) {
-            return;
-        }
+        <input
+          name="description"
+          placeholder="Promotion description"
+          value={form.description}
+          onChange={handleChange}
+          required
+        />
 
-        try {
-            await promotionService.deletePromotion(id);
+        <input
+          type="number"
+          name="discount_percent"
+          placeholder="Discount %"
+          min="1"
+          max="100"
+          value={form.discount_percent}
+          onChange={handleChange}
+          required
+        />
 
-            alert("Promotion deleted successfully");
+        <label>Start Date</label>
 
-            fetchPromotions();
-        } catch (error) {
-            alert(
-                error.response?.data?.message ||
-                "Cannot delete promotion"
-            );
-        }
-    };
+        <input
+          type="date"
+          name="start_date"
+          value={form.start_date}
+          onChange={handleChange}
+          required
+        />
 
-    return (
-        <div>
-            <h1>Promotion Management</h1>
+        <label>End Date</label>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Promotion name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                />
+        <input
+          type="date"
+          name="end_date"
+          value={form.end_date}
+          onChange={handleChange}
+          required
+        />
 
-                <input
-                    type="number"
-                    name="discount_percent"
-                    placeholder="Discount %"
-                    min="1"
-                    max="100"
-                    value={form.discount_percent}
-                    onChange={handleChange}
-                    required
-                />
+        <select name="status" value={form.status} onChange={handleChange}>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
 
-                <label>Start Date</label>
+        <button type="submit">
+          {editingId ? "Update Promotion" : "Create Promotion"}
+        </button>
 
-                <input
-                    type="date"
-                    name="start_date"
-                    value={form.start_date}
-                    onChange={handleChange}
-                    required
-                />
+        {editingId && (
+          <button type="button" onClick={resetForm}>
+            Cancel
+          </button>
+        )}
+      </form>
 
-                <label>End Date</label>
+      <hr />
 
-                <input
-                    type="date"
-                    name="end_date"
-                    value={form.end_date}
-                    onChange={handleChange}
-                    required
-                />
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Discount</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-                <select
-                    name="status"
-                    value={form.status}
-                    onChange={handleChange}
-                >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
+        <tbody>
+          {promotions.map((promotion) => (
+            <tr key={promotion.id}>
+              <td>{promotion.id}</td>
 
-                <button type="submit">
-                    {editingId
-                        ? "Update Promotion"
-                        : "Create Promotion"}
+              <td>{promotion.name}</td>
+
+              <td>{promotion.discount_percent}%</td>
+
+              <td>{promotion.start_date?.slice(0, 10)}</td>
+
+              <td>{promotion.end_date?.slice(0, 10)}</td>
+
+              <td>{promotion.status}</td>
+
+              <td>
+                <button onClick={() => handleEdit(promotion)}>Edit</button>
+
+                <button onClick={() => handleDelete(promotion.id)}>
+                  Delete
                 </button>
-
-                {editingId && (
-                    <button
-                        type="button"
-                        onClick={resetForm}
-                    >
-                        Cancel
-                    </button>
-                )}
-            </form>
-
-            <hr />
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Discount</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {promotions.map((promotion) => (
-                        <tr key={promotion.id}>
-                            <td>{promotion.id}</td>
-
-                            <td>{promotion.name}</td>
-
-                            <td>
-                                {promotion.discount_percent}%
-                            </td>
-
-                            <td>
-                                {promotion.start_date?.slice(0, 10)}
-                            </td>
-
-                            <td>
-                                {promotion.end_date?.slice(0, 10)}
-                            </td>
-
-                            <td>{promotion.status}</td>
-
-                            <td>
-                                <button
-                                    onClick={() =>
-                                        handleEdit(promotion)
-                                    }
-                                >
-                                    Edit
-                                </button>
-
-                                <button
-                                    onClick={() =>
-                                        handleDelete(
-                                            promotion.id
-                                        )
-                                    }
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default PromotionManagement;
