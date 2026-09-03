@@ -48,17 +48,17 @@ const Cart = () => {
     };
 
     const handleRemove = async (productId) => {
-        try {
-            await cartService.removeFromCart(productId);
+    try {
+        await cartService.deleteCartItem(productId);
 
-            fetchCart();
-        } catch (error) {
-            alert(
-                error.response?.data?.message ||
-                "Cannot remove product."
-            );
-        }
-    };
+        fetchCart();
+    } catch (error) {
+        alert(
+            error.response?.data?.message ||
+            "Cannot remove product."
+        );
+    }
+};
 
     const handleClearCart = async () => {
         if (!window.confirm("Clear all items from cart?")) {

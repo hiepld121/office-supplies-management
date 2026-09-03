@@ -48,12 +48,12 @@ const addToCart = async (req, res) => {
 const updateCartItem = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { id } = req.params;
+        const productId = req.params.id;
         const { quantity } = req.body;
 
         const result = await CartService.updateCartItem(
-            id,
             userId,
+            productId,
             quantity
         );
 
@@ -79,11 +79,11 @@ const updateCartItem = async (req, res) => {
 const deleteCartItem = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { id } = req.params;
+        const productId = req.params.id;
 
         const result = await CartService.deleteCartItem(
-            id,
-            userId
+            userId,
+            productId
         );
 
         if (result.affectedRows === 0) {
@@ -95,7 +95,7 @@ const deleteCartItem = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Cart item deleted successfully",
+            message: "Cart item removed successfully",
         });
     } catch (error) {
         return res.status(500).json({
