@@ -277,7 +277,7 @@ CREATE TABLE orders (
         'pending',
         'processing',
         'shipped',
-        'delivered',
+        'completed',
         'cancelled'
     ) DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

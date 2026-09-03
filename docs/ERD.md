@@ -2,7 +2,7 @@
 
 ## Database Overview
 
-Hệ thống gồm 9 bảng:
+Hệ thống gồm 10 bảng:
 
 - roles
 - users
